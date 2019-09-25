@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { add_step, reset } from "./index.js";
 
 class Counter extends Component {
   addStep = () => {
     // this.setState({ steps: this.state.steps + 1 });
-    this.props.dispatch({ type: "ADD_STEP" });
+    this.props.add_step();
   };
   resetSteps = () => {
     // this.setState({ steps: 0 });
-    this.props.dispatch({ type: "RESET" });
+    this.props.reset();
   };
 
   render() {
@@ -26,4 +27,12 @@ class Counter extends Component {
 function mapStateToProps(state) {
   return { steps: state.steps };
 }
-export default connect(mapStateToProps)(Counter);
+
+const mapDispatchToProps = {
+  add_step: add_step,
+  reset: reset
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter);
