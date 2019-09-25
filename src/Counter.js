@@ -1,24 +1,29 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class Counter extends Component {
-  state = { steps: 0 };
-
-  addAStep = () => {
-    this.setState({ steps: this.state.steps + 1 });
+  addStep = () => {
+    // this.setState({ steps: this.state.steps + 1 });
+    this.props.dispatch({ type: "ADD_STEP" });
   };
   resetSteps = () => {
-    this.setState({ steps: 0 });
+    // this.setState({ steps: 0 });
+    this.props.dispatch({ type: "RESET" });
   };
 
   render() {
     return (
       <div className="container-inner">
-        <h2>You've Walked 42 Steps Today!</h2>
-        <button onClick={this.addAStep}>Add A Step</button>
+        <h2>{`You've Walked ${this.props.steps} Steps!`}</h2>
+        <button onClick={this.addStep}>Add A Step</button>
         <div className="spacer10" />
         <button onClick={this.resetSteps}>Reset Steps</button>
       </div>
     );
   }
 }
-export default Counter;
+
+function mapStateToProps(state) {
+  return { steps: state.steps };
+}
+export default connect(mapStateToProps)(Counter);

@@ -1,15 +1,37 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Counter from "./Counter";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 import "./index.css";
 
-// import * as serviceWorker from './serviceWorker';
+const initialState = { steps: 0 };
+
+function reducer(state = initialState, action) {
+  console.log("Reducer here...", action);
+  switch (action.type) {
+    case "ADD_STEP":
+      return {
+        steps: state.steps + 1
+      };
+    case "RESET":
+      return {
+        steps: 0
+      };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer);
 
 const App = () => {
   return (
-    <div className="container-outer">
-      <Counter />
-    </div>
+    <Provider store={store}>
+      <div className="container-outer">
+        <Counter />
+      </div>
+    </Provider>
   );
 };
 
